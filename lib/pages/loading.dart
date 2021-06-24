@@ -12,8 +12,8 @@ String time = "LOADING";
 
 class _LoadingState extends State<Loading> {
   void setupWorldTime() async {
-    WorldTime instance =
-        WorldTime(location: 'America/Los Angeles', flag: 'jkjj', url: 'njk');
+    WorldTime instance = WorldTime(
+        location: "Europe/Berlin", flag: 'jkjj', url: "Europe/Berlin");
     await instance
         .getTime(); //cause gettime is async and its gonna take time for setting time property but whole code get back before that so
     //redirect to home page

@@ -5,19 +5,20 @@ import 'package:intl/intl.dart';
 class WorldTime {
   String location; //location name for the UI
 
-  String time = ""; //the time in that location
-  String flag; //url to an asset flag icon
-  String url; //location url for end point
-  bool isday = false;
+  late String time; //the time in that location
+  late String flag; //url to an asset flag icon
+  String url = "Europe/Berlin"; //location url for end point
+  late bool isday;
   WorldTime({required this.location, required this.flag, required this.url});
 
   Future<void> getTime() async {
     try {
+      final String jsonplaceholder =
+          "http://worldtimeapi.org/api/timezone/$url";
+
       //this is like a promise like this is gonna return void after only after asyn code finish
-      Response
-          response = //get what ever we get if success then the string if fail then error msg
-          await get(Uri.parse(
-              'http://worldtimeapi.org/api/timezone/America/Los_Angeles'));
+
+      Response response = await get(Uri.parse(jsonplaceholder));
       //this argument will be treated as a string but to fetch data we need URI so uri.parse
 
       Map data = jsonDecode(response.body);

@@ -8,9 +8,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  Pass p =
+      new Pass(location: "India", flag: "india.png", time: "--", isday: true);
+     
   @override
   Widget build(BuildContext context) {
-    final data = ModalRoute.of(context)!.settings.arguments as Pass;
+    var data = p;
+    //.location != null
+    //  ? p
+    //: ModalRoute.of(context)!.settings.arguments as Pass;
+
     // String tt = data.time;
     // String ll = data.location;
     // bool idy = data.isday;
@@ -45,8 +52,15 @@ class _HomeState extends State<Home> {
                     child: Column(
                       children: [
                         FlatButton.icon(
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/location');
+                            onPressed: () async {
+                              dynamic result = await Navigator.pushNamed(
+                                  context, '/location');
+                              setState(() {
+                                p.location = result.location;
+                                p.time = result.time;
+                                p.isday = result.isday;
+                                p.flag = result.flag;
+                              });
                             },
                             icon: Icon(Icons.edit_location,
                                 color: Colors.blueGrey[800]),

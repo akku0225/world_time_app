@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/service/world_time_logic.dart';
+import 'package:test_app/pass.dart';
 
 class ChooseLocation extends StatefulWidget {
   @override
@@ -9,7 +10,7 @@ class ChooseLocation extends StatefulWidget {
 class _ChooseLocationState extends State<ChooseLocation> {
   //List View Builder
   List<WorldTime> locations = [
-    WorldTime(url: 'Europe/London', location: 'London', flag: 'uk.png'),
+    WorldTime(url: 'Australia/Sydney', location: 'Sydney', flag: 'australia.png'),
     WorldTime(url: 'Europe/Berlin', location: 'Athens', flag: 'greece.png'),
     WorldTime(url: 'Africa/Cairo', location: 'Cairo', flag: 'egypt.png'),
     WorldTime(url: 'Africa/Nairobi', location: 'Nairobi', flag: 'kenya.png'),
@@ -26,6 +27,19 @@ class _ChooseLocationState extends State<ChooseLocation> {
     WorldTime(url: 'Asia/Seoul', location: 'Seoul', flag: 'south_korea.png'),
     WorldTime(url: 'Asia/Jakarta', location: 'Jakarta', flag: 'indonesia.png'),
   ];
+
+  void updateTime(index) async {
+    WorldTime instance = locations[index];
+    await instance.getTime();
+    Navigator.pop(
+        context,
+        Pass(
+          location: instance.location,
+          flag: instance.flag,
+          time: instance.time,
+          isday: instance.isday,
+        ));
+  }
 
   @override
   void initState() {
@@ -54,7 +68,9 @@ class _ChooseLocationState extends State<ChooseLocation> {
                 //this is a kind of tile/card having an icon img then text
                 child: ListTile(
                   //on tapping we want that for this worldtime instance we get data(in loading page) and route to home page to show data
-                  onTap: () {},
+                  onTap: () {
+                    updateTime(index);
+                  },
                   //text on tile
                   title: Text(locations[index].location),
                   //avatar on tile
