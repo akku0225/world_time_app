@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:test_app/service/world_time_logic.dart';
+import 'package:test_app/pass.dart';
 
 class Loading extends StatefulWidget {
   @override
@@ -11,13 +13,21 @@ String time = "LOADING";
 class _LoadingState extends State<Loading> {
   void setupWorldTime() async {
     WorldTime instance =
-        WorldTime(location: 'location', flag: 'flag,jpg', url: '/uk/london');
+        WorldTime(location: 'America/Los Angeles', flag: 'jkjj', url: 'njk');
     await instance
         .getTime(); //cause gettime is async and its gonna take time for setting time property but whole code get back before that so
-    setState(() {
-      //this triggers build with new time value to change state
-      time = instance.time;
-    });
+    //redirect to home page
+    // print(instance.time + "gh");
+    Navigator.of(context).pushReplacementNamed('/home',
+        arguments: Pass(
+            location: instance.location,
+            flag: instance.flag,
+            time: instance.time,
+            isday: instance.isday));
+    //setState(() {
+    //     //this triggers build with new time value to change state
+    //     time = instance.time;
+    //   });
   }
 
   @override
@@ -29,9 +39,13 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-      padding: EdgeInsets.all(30.0),
-      child: Text(time),
-    ));
+        backgroundColor: Colors.blue,
+        body: Center(
+          child: SpinKitDoubleBounce(
+            //spinner for loading
+            color: Colors.white,
+            size: 60.0,
+          ),
+        ));
   }
 }
